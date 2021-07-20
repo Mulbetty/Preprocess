@@ -1,7 +1,9 @@
 ﻿#include"../include/adaptiveGamma.h"
 using namespace cv;
 using namespace std;
-
+/*
+* 
+*/
 Mat RGB2HSV(Mat src) {
     int row = src.rows;
     int col = src.cols;
@@ -13,8 +15,10 @@ Mat RGB2HSV(Mat src) {
             float r = src.at<Vec3b>(i, j)[2] / 255.0;
             float minn = min(r, min(g, b));
             float maxx = max(r, max(g, b));
+	    maxx = maxx>0.00001?maxx:0.00001;
             dst.at<Vec3f>(i, j)[2] = maxx; //V
             float delta = maxx - minn;
+	    delta = delta>0.000001?delta:0.000001;
             float h, s;
             if (maxx != 0) {
                 s = delta / maxx;

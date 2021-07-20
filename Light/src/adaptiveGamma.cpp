@@ -5,6 +5,7 @@ int adaptiveGama(std::string inputPath, std::string outputPath)
 {
 
     cv::Mat frame = cv::imread(inputPath);
+    frame.convertTo(frame, CV_32F);
     // cv::resize(frame, frame, cv::Size(), 0.5, 0.5);
     int col = frame.cols;
     int row = frame.rows;
@@ -14,7 +15,7 @@ int adaptiveGama(std::string inputPath, std::string outputPath)
         std::fprintf(stderr, "Error to read file");
         exit(1);
     }
-    cv::Mat frameHSV(row, col, CV_32FC1);
+    cv::Mat frameHSV(row, col, CV_32FC3);
     cv::cvtColor(frame, frameHSV, CV_BGR2HSV);
     frameHSV /= 255;
     std::vector<cv::Mat>  hsvChannels;
@@ -27,9 +28,9 @@ int adaptiveGama(std::string inputPath, std::string outputPath)
 	cv::imshow("v", v);
     int HSIZE = fmin(frame.cols, frame.rows);
     float q = sqrt(2.0);
-    v.convertTo(v, CV_32FC1);
-    h.convertTo(h, CV_32FC1);
-    s.convertTo(s, CV_32FC1);
+    v.convertTo(v, CV_32F);
+    h.convertTo(h, CV_32F);
+    s.convertTo(s, CV_32F);
 
     float SIGMA1 = 15;
     float SIGMA2 = 80;
@@ -70,7 +71,7 @@ int adaptiveGama(std::string inputPath, std::string outputPath)
     cv::Mat merge_;
     cv::merge(hsvMerge, merge_);
     cv::Mat outputFrame;
-    outputFrame *= 255;
+    //outputFrame *= 255;
     cv::cvtColor(merge_, outputFrame, CV_HSV2BGR);
     
     //outputFrame.convertTo(outputFrame, CV_8UC3);

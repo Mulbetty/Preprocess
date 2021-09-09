@@ -1,10 +1,9 @@
 #include <cuda_runtime.h>
 #include <stdio.h>
+#include <opencv2/opencv.hpp>
 #include <stdlib.h>
 #include "device_types.h"
 #include <assert.h>
-#include "helper_cuda.h"
-#include "helper_functions.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -29,12 +28,21 @@ DLL_EXPORT_API
 int matMeltVer(u_char * mat1, u_char * mat2, u_char * dst, int width, int height, int channels);
 
 // \brief: cuda上在竖直方向上实现图像渐变融合。从上到下融合
-DLL_EXPORT_API
-int cudaMeltVer(u_char* mat1, u_char* mat2, u_char* dst, int width, int height, int channels);
+//DLL_EXPORT_API
+//int cudaMeltVer(u_char* mat1, u_char* mat2, u_char* dst, int width, int height, int channels);
 
-DLL_EXPORT_API
-int cudaMeltHor(u_char* mat1, u_char* mat2, u_char* dst, int width, int height, int channels);
+//DLL_EXPORT_API
+//int cudaMeltHor(u_char* mat1, u_char* mat2, u_char* dst, int width, int height, int channels);
+
+
 
 #ifdef __cplusplus
 }
 #endif
+DLL_EXPORT_API
+int cudaMeltHorUC3(cv::cuda::GpuMat mat1, cv::cuda::GpuMat mat2, cv::cuda::GpuMat dst, int width, int height, int channels);
+DLL_EXPORT_API
+int cudaMeltVer(cv::cuda::GpuMat mat1, cv::cuda::GpuMat mat2, cv::cuda::GpuMat dst, int width, int height, int channels);
+
+DLL_EXPORT_API
+int cudaMeltHor(cv::cuda::GpuMat mat1, cv::cuda::GpuMat mat2, cv::cuda::GpuMat dst, int width, int height, int channels);
